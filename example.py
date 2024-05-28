@@ -2,7 +2,7 @@ from data_extractor import DataLoader, TrackerType, ResampleBy
 from data_analysis import DataAnalyzer
 
 plot_folder_name = ""
-chronometer_file_name = "data/chronometer_2024_05_26.csv"
+chronometer_file_name = "mock_data/chronometer.csv"
 
 # Import chronometer data
 chronometer_data = DataLoader(
@@ -17,7 +17,7 @@ chronometer_data.plot_single_data_vs_time(
 )
 
 # Import keto mojo data
-ketomojo_file_name = "data/ketomojo_2024_05_26.csv"
+ketomojo_file_name = "mock_data/ketomojo.csv"
 ketomojo_data = DataLoader(
     file_path=ketomojo_file_name,
     tracker_type=TrackerType.KETOMOJO,

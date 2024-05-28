@@ -62,6 +62,12 @@ class DataLoader:
         self.start_at = start_at
         self.allow_multiple_samples_per_day = allow_multiple_samples_per_day
 
+        # Set resample label
+        if self.resample_by == ResampleBy.DAY:
+            self.label_by = "left"
+        else:
+            self.label_by = "right"
+
         # Create a dict to store the processed dataframes
         self.processed_dataframes = {}
 
@@ -195,12 +201,12 @@ class DataLoader:
         resampled_maxes = df_with_updated_date.resample(
             self.resample_by.value,
             on=self.reformatted_iso_date_column_name,
-            label="right",
+            label=self.label_by,
         ).max()
         resampled_mins = df_with_updated_date.resample(
             self.resample_by.value,
             on=self.reformatted_iso_date_column_name,
-            label="right",
+            label=self.label_by,
         ).min()
 
         # Make a new dataframe
@@ -252,22 +258,22 @@ class DataLoader:
         means = df.resample(
             self.resample_by.value,
             on=self.reformatted_iso_date_column_name,
-            label="right",
+            label=self.label_by,
         ).mean()
         counts = df.resample(
             self.resample_by.value,
             on=self.reformatted_iso_date_column_name,
-            label="right",
+            label=self.label_by,
         ).count()
         stdevs = df.resample(
             self.resample_by.value,
             on=self.reformatted_iso_date_column_name,
-            label="right",
+            label=self.label_by,
         ).std(ddof=0)
 
         if self.resample_by == ResampleBy.MONTH:
             # Resampling by month lists data by the last day of each month
-            max_data_counts = means.index.apply(lambda d: d.day)
+            max_data_counts = means.index.day
         elif self.resample_by == ResampleBy.WEEK:
             max_data_counts = 7
         elif self.resample_by == ResampleBy.DAY:
