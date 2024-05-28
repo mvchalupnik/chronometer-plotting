@@ -162,7 +162,7 @@ class DataAnalyzer:
                 "Scatter plot" + " and linear regression"
             )
             plt.ylabel(target_feature)
-            plt.xlabel(self.dataframe.drop(target_feature, axis=1).columns[0])
+            plt.xlabel(predictor_features[0])
 
             plt.scatter(X, y, color="blue")
             plt.plot(
